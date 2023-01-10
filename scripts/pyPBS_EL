@@ -1,0 +1,7 @@
+#! /usr/bin/env python3
+
+import sys
+import pyPBS_EL
+
+if __name__ == '__main__':
+    sys.exit(pyPBS_EL.main())

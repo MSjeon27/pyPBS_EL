@@ -1,4 +1,4 @@
-# get_ncbi
+# pyPBS_EL
 
 ## Table of Contents
   * [Installation](#installation)
@@ -11,52 +11,71 @@
 Download using pip via pypi.
 
 ```bash
-$ pip install get_ncbi
+$ pip install pyPBS_EL
 ```
 (Mac/homebrew users may need to use ``pip3``)
 
-## Quick start
+## Quick start example
+
+When using pyPBS_EL in RaxML, Please reference following command.
+
 ```
-$ get_ncbi 'genus species'
-// -f 'format'    # type of format: geno, trans, prot, gff, gbk
-// -o 'output file name'
+$ pyPBS_EL -P "/home/<usrdir>/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base)"
 ```
 
 ## Instruction
 
-This tool was devised for download the various information about the multiple representative species in 'just one command line'.
+This tool was devised for 'Generate bash script for PBS command and excute it' in 'just one command line'.
 
-It is useful for biologist who want to analyze several representative species.
+The options are classified into two categories, required and optional.
 
-We provides the tool instruction with several cases.
-
-
-### Case 1. multiple genomes
 ```
-$ get_ncbi 'Saccharomyces cerevisiae' 'debaryomyces Hansenii' -f geno
+$ pyPBS_EL -P -c -m -p -M -o
+
+<Required arguments>
+'-P', '--path' : Path of input file(s)
+'-c', '--command' : Command line", default=0)
+
+<Optional arguments>
+'-m', '--memory' : Memory for process (gb)
+'-p', '--prefix' : Prefix of the output file
+'-w', '--walltime' : Time set for usage
+'-o', '--outdir' : Output dir name
 ```
-This type of command downloads the genomic fasta files of 'Saccharomyces cerevisiae' and 'Debaryomyces hansenii', respectively.
 
-In this case, following files will be saved in output directory:
-- saccharomyces_cerevisiae_genomic.fna.gz
-- debaryomyces_hansenii_genomic.fna.gz
+That is all.
 
-The number of species can be infinite! and this tool doesn't consider the upper and lower case letters of species name.
+Additional using case are shown below.
 
 
-### Case 2. multiple formats
+### Case 1. multiple input files (multiple file names in -P option)
 ```
-$ get_ncbi 'Saccharomyces cerevisiae' -f geno prot
+$ pyPBS_EL -P /PATH/test1.phy /PATH/test2.phy -c "raxml-ng --threads 32 --model JTT --msa (base)"
 ```
-This type of command downloads the genomic and protein fasta files of 'Saccharomyces cerevisiae'.
+This command line will create bash scripts for both '/PATH/test1.phy' and '/PATH/test2.phy'. Then two processes of 'raxml-ng' command will be submitted to the server.
 
-It also provides multiple format options! (e.g. -f geno prot trans gff)
+
+### Case 2. multiple input files (regular expression)
+```
+$ pyPBS_EL -P "/PATH/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base)"
+```
+This command line will create bash scripts for all '/PATH/\*.phy' file format. Then the number of \*.phy processes of 'raxml-ng' command will be submitted to the server.
+
+### Case 3. set walltime for user
+```
+$ pyPBS_EL -P "/PATH/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base)" -w "64:00:00"
+```
+This command line will create bash scripts for all '/PATH/\*.phy' file format. Then the number of \*.phy processes of 'raxml-ng' command will be submitted to the server with user-set walltime option (64h).
+
+### Case 4. 
+```
+$ pyPBS_EL -P "/PATH/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base) -o (dir)" -o /Different/PATH/
+```
+This command will create output file in another path. For example,
+
+Input file path : /PATH/\*.phy
+Output file path : /Different/PATH/raxml.out
 
 
 ## Features
-  * Python script to automatically download representative species informations from NCBI genome
-
-
-## Large update log
-get_ncbi 1.1.0
-- When multiple file types were entered, it was modified to distinguish which file types were excluded from Not found. This provides information such as certain species provide genome files, but not protein files.
+  * Python script to generate PBS command lines by python code

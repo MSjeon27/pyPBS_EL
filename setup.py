@@ -1,23 +1,23 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 from setuptools import setup, find_packages, Command
 
 from distutils.command.build_py import build_py
 
 setup(
-    name             = 'get_ncbi',
-    version          = '1.1.0',
+    name             = 'pyPBS_EL',
+    version          = '1.0.2',
     description      = 'Package for distribution',
     author           = 'msjeon27',
     author_email     = 'msjeon27@cau.ac.kr',
     url              = '',
     download_url     = '',
-    install_requires = ['argparse', 'bs4'],
+    install_requires = ['argparse', 'email.utils', 'subprocess'],
 	include_package_data=True,
 	packages=find_packages(),
-    keywords         = ['GETNCBI', 'getncbi'],
+    keywords         = ['PYPBSEL', 'pypbsel'],
     cmdclass         = {'build_py': build_py},
-	scripts          = ['scripts/get_ncbi'],
+	scripts          = ['scripts/pyPBS_EL'],
     python_requires  = '>=3.6',
     zip_safe=False,
     classifiers      = [
