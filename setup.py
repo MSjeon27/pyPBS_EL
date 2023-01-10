@@ -6,13 +6,13 @@ from distutils.command.build_py import build_py
 
 setup(
     name             = 'pyPBS_EL',
-    version          = '1.0.2',
+    version          = '1.0.3',
     description      = 'Package for distribution',
     author           = 'msjeon27',
     author_email     = 'msjeon27@cau.ac.kr',
     url              = '',
     download_url     = '',
-    install_requires = ['argparse', 'email.utils', 'subprocess'],
+    install_requires = ['argparse'],
 	include_package_data=True,
 	packages=find_packages(),
     keywords         = ['PYPBSEL', 'pypbsel'],

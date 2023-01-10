@@ -1,5 +1,4 @@
 import argparse, os
-import email.utils as eu
 import subprocess
 
 def main():
