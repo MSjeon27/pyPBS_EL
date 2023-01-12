@@ -6,6 +6,7 @@ def main():
     parser = argparse.ArgumentParser(description=("Generate PBS commandlines by python code"))
     parser.add_argument('-P', '--path', metavar='P', help="Path of input file(s)", nargs='+', default=0)
     parser.add_argument('-c', '--command', metavar='c', help="Command line", default=0)
+    parser.add_argument('-t', '--thread', metavar='t', help="Number of thread (ppn)", default=8)
     parser.add_argument('-m', '--memory', metavar='m', help="Memory for process (gb)", default=64)
     parser.add_argument('-p', '--prefix', metavar='p', help="Prefix of the PBS script file", default='PBS_script')
     parser.add_argument('-w', '--walltime', metavar='w', help="Time set for usage (Walltime)", default='48:00:00')
@@ -53,7 +54,7 @@ def main():
 #!/bin/bash
 #PBS -N {self.file}
 #PBS -q batch
-#PBS -l nodes=1:ppn=32
+#PBS -l nodes=1:ppn={args.thread}
 ##PBS -l mem={self.memory}gb
 ##PBS -l walltime={args.walltime}
 
@@ -81,7 +82,7 @@ cd {self.path}
     # Create bash files
     bash_list = []
     for i in range(com_num):
-        abs_file = input_list[i]
+        abs_file = os.path.abspath(input_list[i])
         abs_path = os.path.dirname(abs_file)
         abs_base = os.path.basename(abs_file)
         # Set the format of filename

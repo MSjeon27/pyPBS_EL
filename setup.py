@@ -6,7 +6,7 @@ from distutils.command.build_py import build_py
 
 setup(
     name             = 'pyPBS_EL',
-    version          = '1.0.3',
+    version          = '1.0.4',
     description      = 'Package for distribution',
     author           = 'msjeon27',
     author_email     = 'msjeon27@cau.ac.kr',

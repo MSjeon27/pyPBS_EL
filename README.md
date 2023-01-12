@@ -34,9 +34,10 @@ $ pyPBS_EL -P -c -m -p -M -o
 
 <Required arguments>
 '-P', '--path' : Path of input file(s)
-'-c', '--command' : Command line", default=0)
+'-c', '--command' : Command line
 
 <Optional arguments>
+'-t', '--thread' : Number of thread (ppn)
 '-m', '--memory' : Memory for process (gb)
 '-p', '--prefix' : Prefix of the output file
 '-w', '--walltime' : Time set for usage
@@ -61,11 +62,11 @@ $ pyPBS_EL -P "/PATH/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base)"
 ```
 This command line will create bash scripts for all '/PATH/\*.phy' file format. Then the number of \*.phy processes of 'raxml-ng' command will be submitted to the server.
 
-### Case 3. set walltime for user
+### Case 3. set walltime and thread for user
 ```
-$ pyPBS_EL -P "/PATH/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base)" -w "64:00:00"
+$ pyPBS_EL -P "/PATH/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base)" -w "64:00:00 -t 32"
 ```
-This command line will create bash scripts for all '/PATH/\*.phy' file format. Then the number of \*.phy processes of 'raxml-ng' command will be submitted to the server with user-set walltime option (64h).
+This command line will create bash scripts for all '/PATH/\*.phy' file format. Then the number of \*.phy processes of 'raxml-ng' command will be submitted to the server with user-set walltime and thread option (64h, 32threads).
 
 ### Case 4. 
 ```
