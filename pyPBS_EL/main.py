@@ -6,6 +6,7 @@ def main():
     parser = argparse.ArgumentParser(description=("Generate PBS commandlines by python code"))
     parser.add_argument('-P', '--path', metavar='P', help="Path of input file(s)", nargs='+', default=0)
     parser.add_argument('-c', '--command', metavar='c', help="Command line", default=0)
+    parser.add_argument('-e', '--env', metavar='e', help="Path to environment", default=0)
     parser.add_argument('-t', '--thread', metavar='t', help="Number of thread (ppn)", default=8)
     parser.add_argument('-m', '--memory', metavar='m', help="Memory for process (gb)", default=64)
     parser.add_argument('-p', '--prefix', metavar='p', help="Prefix of the PBS script file", default='PBS_script')
@@ -49,7 +50,19 @@ def main():
                     self.command = self.command.replace('(dir)', args.outdir)
                 else:
                     self.command = self.command.replace('(dir)', self.path)
-
+            # Check the environmental arguments
+            conda_env = ''
+            env_act = ''
+            if args.command == 0:
+                pass
+            else:
+                if '~/' in args.env:
+                    revised_env = args.env.replace('~/', '$HOME/')
+                    conda_env = f'export PATH={revised_env}/bin:$PATH'
+                else:
+                    conda_env = f'export PATH={args.env}/bin:$PATH'
+                env_name = args.env.split('/')[-1]
+                env_act = f'source activate {env_name}'
             outcommand_fmt = f"""
 #!/bin/bash
 #PBS -N {self.file}
@@ -57,6 +70,9 @@ def main():
 #PBS -l nodes=1:ppn={args.thread}
 ##PBS -l mem={self.memory}gb
 ##PBS -l walltime={args.walltime}
+
+{conda_env}
+{env_act}
 
 cd {self.path}
 
