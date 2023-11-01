@@ -78,13 +78,13 @@ Input file path : /PATH/\*.phy
 Output file path : /Different/PATH/raxml.out
 
 ### Case 5. Set the conda environment
-'''
+```
 $ pyPBS_EL -P "/PATH/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base) -o (dir)" -e /home/msjeon27/works/anaconda3/envs/RaxML
-'''
+```
 or
-'''
+```
 $ pyPBS_EL -P "/PATH/*.phy" -c "raxml-ng --threads 32 --model JTT --msa (base) -o (dir)" -e ~/works/anaconda3/envs/RaxML
-'''
+```
 This command will submit the process to proceed in your conda environment. In this case, you should set your conda path.
 
 

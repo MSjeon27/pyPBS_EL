@@ -53,7 +53,7 @@ def main():
             # Check the environmental arguments
             conda_env = ''
             env_act = ''
-            if args.command == 0:
+            if args.env == 0:
                 pass
             else:
                 if '~/' in args.env:
